@@ -16,13 +16,31 @@ var testCases = []struct {
 }{
 	{"small-1", 10},
 	{"small-2", 20},
-	{"small-3", 50},
+	{"small-3", 30},
+	{"small-4", 40},
+	{"small-5", 50},
+	{"small-6", 60},
+	{"small-7", 70},
+	{"small-8", 80},
+	{"small-9", 90},
 	{"medium-1", 100},
 	{"medium-2", 200},
-	{"medium-3", 500},
+	{"medium-3", 300},
+	{"medium-4", 400},
+	{"medium-5", 500},
+	{"medium-6", 600},
+	{"medium-7", 700},
+	{"medium-8", 800},
+	{"medium-9", 900},
 	{"large-1", 1000},
 	{"large-2", 2000},
-	{"large-3", 5000},
+	{"large-3", 3000},
+	{"large-4", 4000},
+	{"large-5", 5000},
+	{"large-6", 6000},
+	{"large-7", 7000},
+	{"large-8", 8000},
+	{"large-9", 9000},
 }
 
 // role allocation pool
@@ -55,13 +73,13 @@ func BenchmarkEnforcer(b *testing.B) {
 			}
 
 			// warm up cache
-			e.Enforce("testuser-0", "device_control", "start")
+			e.Enforce("testuser-0", "device_control", "w")
 
 			// conduct test
 			startTime := time.Now()
 			for n := 0; n < b.N; n++ {
 				user := fmt.Sprintf("testuser-%d", n%tc.userSize)
-				_, _ = e.Enforce(user, "device_control", "start")
+				_, _ = e.Enforce(user, "device_control", "w")
 			}
 			duration := time.Since(startTime)
 
