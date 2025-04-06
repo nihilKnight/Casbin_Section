@@ -2,24 +2,24 @@ goos: linux
 goarch: amd64
 pkg: github.com/nihilKnight/casbin-section/perf_test
 cpu: 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
-BenchmarkEnforcer/small-1-4         	  119499	      8904 ns/op	17592186044416 MB/op	    1663 B/op	      23 allocs/op
-BenchmarkEnforcer/small-2-4         	  123128	      9066 ns/op	         0.003578 MB/op	    1669 B/op	      23 allocs/op
-BenchmarkEnforcer/small-3-4         	  121780	      9528 ns/op	17592186044416 MB/op	    1670 B/op	      23 allocs/op
-BenchmarkEnforcer/small-4-4         	  117805	     10390 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
-BenchmarkEnforcer/small-5-4         	  112909	      9522 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
-BenchmarkEnforcer/small-6-4         	  100500	     10138 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
-BenchmarkEnforcer/small-7-4         	  122047	     10283 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
-BenchmarkEnforcer/small-8-4         	  116610	      9754 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
-BenchmarkEnforcer/small-9-4         	  116883	      9898 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-1-4        	  117501	     10265 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-2-4        	   95002	     11548 ns/op	17592186044416 MB/op	    1676 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-3-4        	  121562	     10188 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-4-4        	  114681	     10718 ns/op	17592186044416 MB/op	    1677 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-5-4        	  107487	     10189 ns/op	17592186044416 MB/op	    1680 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-6-4        	  115381	      9685 ns/op	17592186044415 MB/op	    1681 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-7-4        	  121568	     10299 ns/op	17592186044415 MB/op	    1683 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-8-4        	  120885	     12126 ns/op	17592186044415 MB/op	    1684 B/op	      23 allocs/op
-BenchmarkEnforcer/medium-9-4        	  112395	     11835 ns/op	17592186044415 MB/op	    1684 B/op	      23 allocs/op
+BenchmarkEnforcer/small-1-4         	  305211	      3834 ns/op	17592186044416 MB/op	    1667 B/op	      23 allocs/op
+BenchmarkEnforcer/small-2-4         	  312661	      3942 ns/op	         0.07484 MB/op	    1669 B/op	      23 allocs/op
+BenchmarkEnforcer/small-3-4         	  311082	      3917 ns/op	17592186044416 MB/op	    1673 B/op	      23 allocs/op
+BenchmarkEnforcer/small-4-4         	  313010	      3853 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/small-5-4         	  279367	      3992 ns/op	         0.04893 MB/op	    1673 B/op	      23 allocs/op
+BenchmarkEnforcer/small-6-4         	  266340	      3936 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/small-7-4         	  282775	      3912 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/small-8-4         	  306288	      3818 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/small-9-4         	  271323	      3955 ns/op	17592186044416 MB/op	    1675 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-1-4        	  306058	      3916 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-2-4        	  292652	      3860 ns/op	17592186044416 MB/op	    1675 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-3-4        	  259322	      3880 ns/op	17592186044416 MB/op	    1677 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-4-4        	  262974	      4943 ns/op	17592186044416 MB/op	    1679 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-5-4        	  267792	      4081 ns/op	17592186044416 MB/op	    1677 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-6-4        	  270285	      4049 ns/op	17592186044415 MB/op	    1679 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-7-4        	  271206	      3835 ns/op	17592186044415 MB/op	    1677 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-8-4        	  254618	      3920 ns/op	17592186044415 MB/op	    1679 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-9-4        	  258586	      3883 ns/op	17592186044415 MB/op	    1678 B/op	      23 allocs/op
 PASS
-ok  	github.com/nihilKnight/casbin-section/perf_test	61.255s
+ok  	github.com/nihilKnight/casbin-section/perf_test	34.062s
 

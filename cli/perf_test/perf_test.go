@@ -12,6 +12,7 @@ import (
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var (
@@ -107,7 +108,9 @@ func BenchmarkEnforcer(b *testing.B) {
 func initDatabase() {
     once.Do(func() {
         var err error
-        dbPool, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+        dbPool, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+            Logger: logger.Default.LogMode(logger.Silent),
+        })
         if err != nil {
             panic(err)
         }
@@ -138,6 +141,6 @@ func initDatabase() {
 var roles = []string{
 	"role:operator",
 	"role:maintenance_tech",
-	"role:guest",
+	"role:bus_engineer",
 	"role:data_analyst",
 }
