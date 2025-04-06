@@ -21,5 +21,6 @@ p, role:maintenance_tech, historical_data, r
 p, role:data_analyst, realtime_data, r
 p, role:data_analyst, historical_data, (r|ex)
 
-p, role:guest, device_status, r
-p, role:guest, program_version, r
+g, alice, role:system_admin
+g, bob, role:operator
+g, carol, role:program_engineer
