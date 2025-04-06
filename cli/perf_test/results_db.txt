@@ -1,0 +1,25 @@
+goos: linux
+goarch: amd64
+pkg: github.com/nihilKnight/casbin-section/perf_test
+cpu: 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+BenchmarkEnforcer/small-1-4         	  119499	      8904 ns/op	17592186044416 MB/op	    1663 B/op	      23 allocs/op
+BenchmarkEnforcer/small-2-4         	  123128	      9066 ns/op	         0.003578 MB/op	    1669 B/op	      23 allocs/op
+BenchmarkEnforcer/small-3-4         	  121780	      9528 ns/op	17592186044416 MB/op	    1670 B/op	      23 allocs/op
+BenchmarkEnforcer/small-4-4         	  117805	     10390 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
+BenchmarkEnforcer/small-5-4         	  112909	      9522 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
+BenchmarkEnforcer/small-6-4         	  100500	     10138 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
+BenchmarkEnforcer/small-7-4         	  122047	     10283 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
+BenchmarkEnforcer/small-8-4         	  116610	      9754 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
+BenchmarkEnforcer/small-9-4         	  116883	      9898 ns/op	17592186044416 MB/op	    1672 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-1-4        	  117501	     10265 ns/op	17592186044416 MB/op	    1671 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-2-4        	   95002	     11548 ns/op	17592186044416 MB/op	    1676 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-3-4        	  121562	     10188 ns/op	17592186044416 MB/op	    1674 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-4-4        	  114681	     10718 ns/op	17592186044416 MB/op	    1677 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-5-4        	  107487	     10189 ns/op	17592186044416 MB/op	    1680 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-6-4        	  115381	      9685 ns/op	17592186044415 MB/op	    1681 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-7-4        	  121568	     10299 ns/op	17592186044415 MB/op	    1683 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-8-4        	  120885	     12126 ns/op	17592186044415 MB/op	    1684 B/op	      23 allocs/op
+BenchmarkEnforcer/medium-9-4        	  112395	     11835 ns/op	17592186044415 MB/op	    1684 B/op	      23 allocs/op
+PASS
+ok  	github.com/nihilKnight/casbin-section/perf_test	61.255s
+

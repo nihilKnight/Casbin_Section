@@ -54,17 +54,19 @@ func (b *BackendCmd) Request(cmd *cobra.Command, args []string) {
 		log.Fatalf("Failed to create enforcer: %v", err)
 	}
 
+	fmt.Printf("Checking if %s can %s %s\n", args[0], args[2], args[1])
+
 	// 执行权限检查
-	ok, err := e.Enforce(b.sub, b.obj, b.act)
+	ok, err := e.Enforce(args[0], args[1], args[2])
 	if err != nil {
 		log.Fatalf("Enforce error: %v", err)
 	}
 
 	// 输出结果
 	if ok {
-		fmt.Printf("[ALLOW] %s can %s %s\n", b.sub, b.obj, b.act)
+		fmt.Printf("[ALLOW] %s can %s %s\n", args[0], args[2], args[1])
 	} else {
-		fmt.Printf("[DENY] %s cannot %s %s\n", b.sub, b.obj, b.act)
+		fmt.Printf("[DENY] %s cannot %s %s\n", args[0], args[2], args[1])
 	}
 }
 

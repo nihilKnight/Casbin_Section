@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
@@ -73,20 +76,26 @@ func (c *DatabaseCmd) getGormDB() *gorm.DB {
 	return db
 }
 
-// 实现各子命令的具体逻辑（示例代码）
 func (c *DatabaseCmd) initDatabase(cmd *cobra.Command, args []string) {
-	e, err := c.getEnforcer()
-	if err != nil {
-		log.Fatal(err)
-	}
+    e, err := c.getEnforcer()
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	// 从CSV加载策略
-	if err := e.LoadPolicy(); err != nil {
-		log.Fatalf("Failed to load policy: %v", err)
-	}
+    // 清空现有策略
+    c.clear()
 
-	// 这里可以添加从CSV文件导入策略的逻辑
-	fmt.Println("Database initialized successfully")
+    // 从CSV加载策略
+    if err := loadFlatPolicyFromCSV(e, "conf/plc-role-policy.csv"); err != nil {
+        log.Fatal(err)
+    }
+
+    // 保存到数据库
+    if err := e.SavePolicy(); err != nil {
+        log.Fatalf("Failed to save policy: %v", err)
+    }
+
+    fmt.Println("Database initialized with CSV policies")
 }
 
 func (c *DatabaseCmd) addUserRole(cmd *cobra.Command, args []string) {
@@ -108,12 +117,71 @@ func (c *DatabaseCmd) addUserRole(cmd *cobra.Command, args []string) {
 }
 
 func (c *DatabaseCmd) resetDatabase(cmd *cobra.Command, args []string) {
-	db := c.getGormDB()
-
-	// 清空所有策略
-	if err := db.Exec("TRUNCATE TABLE casbin_rule").Error; err != nil {
-		log.Fatalf("Failed to truncate table: %v", err)
-	}
-
+    c.clear()
 	fmt.Println("Database reset successfully")
+}
+
+func (c *DatabaseCmd) clear() {
+    db := c.getGormDB()
+
+    if db.Migrator().HasTable("casbin_rule") {
+        db.Exec("TRUNCATE TABLE casbin_rule")
+    } else {
+        log.Println("casbin_rule table not found, skipping truncate")
+    }
+}
+
+
+func loadFlatPolicyFromCSV(e *casbin.Enforcer, csvPath string) error {
+    file, err := os.Open(csvPath)
+    if err != nil {
+        return fmt.Errorf("failed to open CSV file: %w", err)
+    }
+    defer file.Close()
+
+    scanner := bufio.NewScanner(file)
+    lineNum := 0
+
+    for scanner.Scan() {
+        lineNum++
+        line := strings.TrimSpace(scanner.Text())
+        
+        // 跳过空行和注释
+        if line == "" || strings.HasPrefix(line, "#") {
+            continue
+        }
+
+        // 拆分CSV字段（兼容带/不带逗号空格）
+        parts := strings.Split(line, ",")
+        for i := range parts {
+            parts[i] = strings.TrimSpace(parts[i])
+        }
+
+        if len(parts) < 2 {
+            continue // 跳过无效行
+        }
+
+        switch parts[0] {
+        case "p":
+            if len(parts) < 4 {
+                return fmt.Errorf("invalid policy format at line %d: %s", lineNum, line)
+            }
+            // 直接添加单条策略：p_type, v0, v1, v2
+            if _, err := e.AddPolicy(parts[1], parts[2], parts[3]); err != nil {
+                return fmt.Errorf("failed to add policy at line %d: %w", lineNum, err)
+            }
+        case "g":
+            if len(parts) < 3 {
+                return fmt.Errorf("invalid grouping format at line %d: %s", lineNum, line)
+            }
+            // 添加用户-角色关系
+            if _, err := e.AddGroupingPolicy(parts[1], parts[2]); err != nil {
+                return fmt.Errorf("failed to add grouping at line %d: %w", lineNum, err)
+            }
+        default:
+            return fmt.Errorf("unknown policy type '%s' at line %d", parts[0], lineNum)
+        }
+    }
+
+    return scanner.Err()
 }

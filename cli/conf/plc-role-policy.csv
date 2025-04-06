@@ -1,26 +1,44 @@
-p, role:system_admin, user_management, (c|r|u|d)
-p, role:system_admin, audit_log, (r|ex)
-p, role:system_admin, project_config, (im|ex)
+p, system_admin, user_management, c
+p, system_admin, user_management, r
+p, system_admin, user_management, u
+p, system_admin, user_management, d
+p, system_admin, audit_log, r
+p, system_admin, audit_log, ex
+p, system_admin, project_config, im
+p, system_admin, project_config, ex
 
-p, role:program_engineer, program_manage, (c|r|u|d)
-p, role:program_engineer, program_control, (w|r|re)
-p, role:program_engineer, realtime_data, (r|w)
-p, role:program_engineer, project_config, (c|r|u|d)
+p, program_engineer, program_manage, c
+p, program_engineer, program_manage, r
+p, program_engineer, program_manage, u
+p, program_engineer, program_manage, d
+p, program_engineer, program_control, w
+p, program_engineer, program_control, r
+p, program_engineer, program_control, re
+p, program_engineer, realtime_data, r
+p, program_engineer, realtime_data, r
+p, program_engineer, project_config, c
+p, program_engineer, project_config, r
+p, program_engineer, project_config, u
+p, program_engineer, project_config, d
 
-p, role:bus_engineer, bus_config, (c|r|u|d)
-p, role:bus_engineer, bus_diagnosis, (r|re)
+p, bus_engineer, bus_config, c
+p, bus_engineer, bus_config, r
+p, bus_engineer, bus_config, u
+p, bus_engineer, bus_config, d
+p, bus_engineer, bus_diagnosis, r
+p, bus_engineer, bus_diagnosis, re
 
-p, role:operator, device_control, (w|r|re)
-p, role:operator, program_control, (w|r)
-p, role:operator, realtime_data, r
+p, operator, device_control, w
+p, operator, device_control, r
+p, operator, device_control, re
+p, operator, program_control, w
+p, operator, program_control, r
+p, operator, realtime_data, r
 
-p, role:maintenance_tech, device_maintenance, re
-p, role:maintenance_tech, realtime_data, r
-p, role:maintenance_tech, historical_data, r
+p, maintenance_tech, device_maintenance, re
+p, maintenance_tech, realtime_data, r
+p, maintenance_tech, historical_data, r
 
-p, role:data_analyst, realtime_data, r
-p, role:data_analyst, historical_data, (r|ex)
-
-g, alice, role:system_admin
-g, bob, role:operator
-g, carol, role:program_engineer
+p, data_analyst, realtime_data, r
+p, data_analyst, historical_data, r
+p, data_analyst, historical_data, ex
