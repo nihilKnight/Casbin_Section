@@ -1,0 +1,25 @@
+p, role:system_admin, user_management, (c|r|u|d)
+p, role:system_admin, audit_log, (r|ex)
+p, role:system_admin, project_config, (im|ex)
+
+p, role:program_engineer, program_manage, (c|r|u|d)
+p, role:program_engineer, program_control, (w|r|re)
+p, role:program_engineer, realtime_data, (r|w)
+p, role:program_engineer, project_config, (c|r|u|d)
+
+p, role:bus_engineer, bus_config, (c|r|u|d)
+p, role:bus_engineer, bus_diagnosis, (r|re)
+
+p, role:operator, device_control, (w|r|re)
+p, role:operator, program_control, (w|r)
+p, role:operator, realtime_data, r
+
+p, role:maintenance_tech, device_maintenance, re
+p, role:maintenance_tech, realtime_data, r
+p, role:maintenance_tech, historical_data, r
+
+p, role:data_analyst, realtime_data, r
+p, role:data_analyst, historical_data, (r|ex)
+
+p, role:guest, device_status, r
+p, role:guest, program_version, r
