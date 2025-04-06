@@ -27,7 +27,7 @@ func NewDatabaseCmd() *cobra.Command {
 	databaseCmd.PersistentFlags().StringVarP(
 		&cmd.dsn,
 		"dsn", "",
-		"root:password@tcp(localhost:3306)/casbin?charset=utf8mb4&parseTime=True&loc=Local",
+		"plc_casbiner:P1c_c45b1N@tcp(localhost:3306)/plc_casbin?charset=utf8mb4&parseTime=True&loc=Local",
 		"Database connection string",
 	)
 

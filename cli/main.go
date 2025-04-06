@@ -15,7 +15,7 @@ func main() {
 	}
 
 	rootCmd.AddCommand(cmd.NewDatabaseCmd())
-	rootCmd.AddCommand(cmd.NewRequestCmd())
+	rootCmd.AddCommand(cmd.NewBackendCmd())
 
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(err)

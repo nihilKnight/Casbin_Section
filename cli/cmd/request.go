@@ -7,50 +7,71 @@ import (
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/spf13/cobra"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-func NewRequestCmd() *cobra.Command {
-	var (
-		sub, obj, act string
-		dsn           string
-	)
+type BackendCmd struct {
+	sub string // Subject (username)
+	obj string // Object (resource)
+	act string // Action (operation)
+	dsn string // Database connection string
+}
 
-	cmd := &cobra.Command{
-		Use:   "request",
-		Short: "Check access request",
-		Run: func(cmd *cobra.Command, args []string) {
-			// 初始化带数据库的Enforcer
-			a, err := gormadapter.NewAdapter("mysql", dsn)
-			if err != nil {
-				log.Fatalf("Failed to create adapter: %v", err)
-			}
+func NewBackendCmd() *cobra.Command {
 
-			e, err := casbin.NewEnforcer("conf/plc-rbac-model.conf", a)
-			if err != nil {
-				log.Fatalf("Failed to create enforcer: %v", err)
-			}
+	cmd := &BackendCmd{}
 
-			// 执行权限检查
-			ok, err := e.Enforce(sub, obj, act)
-			if err != nil {
-				log.Fatalf("Enforce error: %v", err)
-			}
-
-			// 输出结果
-			if ok {
-				fmt.Printf("[ALLOW] %s can %s %s\n", sub, act, obj)
-			} else {
-				fmt.Printf("[DENY] %s cannot %s %s\n", sub, act, obj)
-			}
-		},
+	backendCmd := &cobra.Command{
+		Use:   "backend",
+		Short: "Access control backend operations",
 	}
 
-	cmd.Flags().StringVarP(&sub, "sub", "s", "", "Subject (username)")
-	cmd.Flags().StringVarP(&obj, "obj", "o", "", "Object (resource)")
-	cmd.Flags().StringVarP(&act, "act", "a", "", "Action (operation)")
-	cmd.Flags().StringVar(&dsn, "dsn", 
-		"root:password@tcp(localhost:3306)/casbin?charset=utf8mb4&parseTime=True&loc=Local",
-		"Database connection string")
+	backendCmd.PersistentFlags().StringVarP(&cmd.dsn, "dsn", "",
+		"plc_casbiner:P1c_c45b1N@tcp(localhost:3306)/plc_casbin?charset=utf8mb4&parseTime=True&loc=Local",
+		"Database connection string",
+	)
 
-	return cmd
+	backendCmd.AddCommand(&cobra.Command{
+		Use: "request [username] [resource] [operation]",
+		Short: "Check if a user can perform an operation on a resource",
+		Args: cobra.ExactArgs(3),
+		Run: cmd.Request,
+	})
+
+	return backendCmd
+}
+
+func (b *BackendCmd) Request(cmd *cobra.Command, args []string) {
+	// 初始化带数据库的Enforcer
+	a, err := gormadapter.NewAdapterByDB(b.getGormDB())
+	if err != nil {
+		log.Fatalf("failed to create adapter: %v", err)
+	}
+
+	e, err := casbin.NewEnforcer("conf/plc-rbac-model.conf", a)
+	if err != nil {
+		log.Fatalf("Failed to create enforcer: %v", err)
+	}
+
+	// 执行权限检查
+	ok, err := e.Enforce(b.sub, b.obj, b.act)
+	if err != nil {
+		log.Fatalf("Enforce error: %v", err)
+	}
+
+	// 输出结果
+	if ok {
+		fmt.Printf("[ALLOW] %s can %s %s\n", b.sub, b.obj, b.act)
+	} else {
+		fmt.Printf("[DENY] %s cannot %s %s\n", b.sub, b.obj, b.act)
+	}
+}
+
+func (b *BackendCmd) getGormDB() *gorm.DB {
+	db, err := gorm.Open(mysql.Open(b.dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("Failed to connect database: %v", err)
+	}
+	return db
 }
